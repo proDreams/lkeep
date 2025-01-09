@@ -5,12 +5,7 @@ on:
 
 jobs:
   lint:
-    env:
-      RUNNER_TOOL_CACHE: /opt/hostedtoolcache
-
     runs-on: ubuntu-latest
-    container:
-      image: catthehacker/ubuntu:act-22.04
 
     steps:
       - name: Checkout repository
@@ -21,8 +16,6 @@ jobs:
         with:
           python-version: "3.12"
           cache: 'pip'
-        env:
-          AGENT_TOOLSDIRECTORY: /opt/hostedtoolcache
 
       - name: Cache pre-commit hooks
         id: cache-pre-commit
@@ -36,7 +29,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install poetry
+          pip install poetry==2.0.0
           poetry install
           poetry run pre-commit install
 
@@ -44,7 +37,7 @@ jobs:
         run: poetry run pre-commit run --all-files --hook-stage manual
 
       - name: Run Telegram Notify Action
-        uses: proDreams/actions-telegram-notifier@v1
+        uses: proDreams/actions-telegram-notifier@main
         if: always()
         with:
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
