@@ -1,3 +1,11 @@
+"""
+Проект: Lkeep
+Автор: Иван Ашихмин
+Год: 2025
+Специально для проекта "Код на салфетке"
+https://pressanybutton.ru/category/servis-na-fastapi/
+"""
+
 from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
