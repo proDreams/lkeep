@@ -54,9 +54,14 @@ class Settings(BaseSettings):
 
     :ivar db_settings: Экземпляр класса DBSettings, содержащий настройки базы данных.
     :type db_settings: DBSettings
+    :ivar secret_key: Секретный ключ для шифрования
+    :type secret_key: SecretStr
     """
 
     db_settings: DBSettings = DBSettings()
+    secret_key: SecretStr
+
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf8", extra="ignore")
 
 
 settings = Settings()
