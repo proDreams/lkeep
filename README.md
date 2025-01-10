@@ -16,6 +16,11 @@ PostgreSQL, Poetry, Pydantic и других.
 - **SQLAlchemy** — ORM для работы с базой данных.
 - **Poetry** — инструмент для управления зависимостями и виртуальными окружениями.
 - **Pydantic** — для валидации данных и работы с моделями.
+- **pre-commit** — инструмент для автоматической проверки кода перед коммитом.
+- **CI Workflow** — автоматизация тестирования приложения.
+- **uvicorn** — высокопроизводительный ASGI-сервер для обработки HTTP-запросов.
+- **pydantic-settings** — библиотека для работы с конфигурациями и переменными окружения с использованием Pydantic.
+- **passlib** — библиотека для безопасного хеширования паролей и других данных.
 
 ## Репозитории
 
@@ -29,6 +34,9 @@ PostgreSQL, Poetry, Pydantic и других.
 
 1. [FastAPI 1. Инициализация проекта](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-1-inicializaciya-proekta/)
 2. [FastAPI 2. Подготовка проекта](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-2-podgotovka-proekta/)
+3. [FastAPI 3. Подключение к SQLAlchemy и генератор сессий](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-3-podklyuchenie-k-sqlalchemy-i-generator-s/)
+4. [FastAPI 4. Модель пользователя, миксины и Alembic](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-4-model-polzovatelya-i-alembic/)
+5. [FastAPI 5. Приложение аутентификации и Pydantic схемы](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-5-prilozhenie-autentifikacii-i-pydantic-sh/)
 
 ## Установка
 
