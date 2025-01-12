@@ -9,7 +9,11 @@ https://pressanybutton.ru/category/servis-na-fastapi/
 import uvicorn
 from fastapi import FastAPI
 
+from lkeep.apps import apps_router
+
 app = FastAPI()
+
+app.include_router(router=apps_router)
 
 
 def start():
