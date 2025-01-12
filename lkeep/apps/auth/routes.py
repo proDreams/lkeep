@@ -15,7 +15,7 @@ from lkeep.apps.auth.services import UserService
 auth_router = APIRouter(prefix="/auth", tags=["auth"])
 
 
-@auth_router.post(path="/register", status_code=status.HTTP_201_CREATED)
+@auth_router.post(path="/register", response_model=UserReturnData, status_code=status.HTTP_201_CREATED)
 async def registration(user: RegisterUser, service: UserService = Depends(UserService)) -> UserReturnData:
     """
     Регистрация нового пользователя.
