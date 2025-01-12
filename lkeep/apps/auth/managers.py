@@ -20,7 +20,7 @@ class UserManager:
     Класс для управления пользователями.
     """
 
-    def __init__(self, model: type[User] = User, db: DBDependency = Depends(DBDependency)) -> None:
+    def __init__(self, db: DBDependency = Depends(DBDependency)) -> None:
         """
         Инициализирует экземпляр класса.
 
@@ -30,7 +30,7 @@ class UserManager:
         :type db: DBDependency
         """
         self.db = db
-        self.model = model
+        self.model = User
 
     async def create_user(self, user: CreateUser) -> UserReturnData:
         """
