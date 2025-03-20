@@ -48,18 +48,83 @@ class DBSettings(BaseSettings):
         return f"postgresql+asyncpg://{self.db_user}:{self.db_password.get_secret_value()}@{self.db_host}:{self.db_port}/{self.db_name}"
 
 
+class EmailSettings(BaseSettings):
+    """
+    Настройки для электронной почты.
+
+    :ivar email_host: Адрес SMTP-сервера.
+    :type email_host: str
+    :ivar email_port: Порт, используемый для подключения к SMTP-серверу.
+    :type email_port: int
+    :ivar email_username: Имя пользователя для аутентификации на электронной почтовом сервере.
+    :type email_username: str
+    :ivar email_password: Пароль пользователя, скрытый через `SecretStr` для обеспечения безопасности.
+    :type email_password: SecretStr
+    :model_config: Конфигурация settings, которая указывает на файл окружения и его кодировку.
+    :type model_config: SettingsConfigDict
+    """
+
+    email_host: str
+    email_port: int
+    email_username: str
+    email_password: SecretStr
+
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf8", extra="ignore")
+
+
+class RedisSettings(BaseSettings):
+    """
+    Класс для настройки соединения с Redis.
+
+    :ivar redis_host: Хост, на котором размещается Redis-сервер.
+    :type redis_host: str
+    :ivar redis_port: Порт, через который происходит соединение с Redis-сервером.
+    :type redis_port: int
+    :ivar redis_db: Номер базы данных для использования в Redis.
+    :type redis_db: int
+    """
+
+    redis_host: str
+    redis_port: int
+    redis_db: int
+
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf8", extra="ignore")
+
+    @property
+    def redis_url(self):
+        """
+        Получает URL для подключения к Redis.
+
+        :returns: Строка с URL для подключения к Redis в формате `redis://<хост>:<порт>/<база данных>`.
+        :rtype: str
+        """
+        return f"redis://{self.redis_host}:{self.redis_port}/{self.redis_db}"
+
+
 class Settings(BaseSettings):
     """
-    Класс Settings используется для хранения настроек приложения.
+    Класс для хранения настроек приложения.
 
-    :ivar db_settings: Экземпляр класса DBSettings, содержащий настройки базы данных.
+    :ivar db_settings: Настройки для работы с базой данных.
     :type db_settings: DBSettings
-    :ivar secret_key: Секретный ключ для шифрования
+    :ivar email_settings: Настройки для отправки электронной почты.
+    :type email_settings: EmailSettings
+    :ivar redis_settings: Настройки для работы с Redis.
+    :type redis_settings: RedisSettings
+    :ivar secret_key: Секретный ключ приложения.
     :type secret_key: SecretStr
+    :ivar templates_dir: Путь к директории шаблонов.
+    :type templates_dir: str
+    :ivar frontend_url: Адрес фронтенд-приложения.
+    :type frontend_url: str
     """
 
     db_settings: DBSettings = DBSettings()
+    email_settings: EmailSettings = EmailSettings()
+    redis_settings: RedisSettings = RedisSettings()
     secret_key: SecretStr
+    templates_dir: str = "templates"
+    frontend_url: str
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf8", extra="ignore")
 
