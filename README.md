@@ -21,6 +21,15 @@ PostgreSQL, Poetry, Pydantic и других.
 - **uvicorn** — высокопроизводительный ASGI-сервер для обработки HTTP-запросов.
 - **pydantic-settings** — библиотека для работы с конфигурациями и переменными окружения с использованием Pydantic.
 - **passlib** — библиотека для безопасного хеширования паролей и других данных.
+- **celery** — распределённая система для выполнения фоновых задач и управления очередями, позволяющая выполнять задачи
+  асинхронно.
+- **redis** — высокопроизводительное in-memory хранилище, используемое для кэширования данных и как брокер сообщений для
+  Celery.
+- **itsdangerous** — библиотека для безопасного создания и проверки подписанных данных, что помогает защитить токены и
+  другую чувствительную информацию.
+- **smtplib** — стандартный модуль Python для отправки электронной почты через протокол SMTP.
+- **jinja2** — современный и гибкий шаблонизатор, который позволяет динамически генерировать HTML и другие текстовые
+  форматы.
 
 ## Репозитории
 
@@ -37,6 +46,8 @@ PostgreSQL, Poetry, Pydantic и других.
 3. [FastAPI 3. Подключение к SQLAlchemy и генератор сессий](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-3-podklyuchenie-k-sqlalchemy-i-generator-s/)
 4. [FastAPI 4. Модель пользователя, миксины и Alembic](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-4-model-polzovatelya-i-alembic/)
 5. [FastAPI 5. Приложение аутентификации и Pydantic схемы](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-5-prilozhenie-autentifikacii-i-pydantic-sh/)
+6. [FastAPI 6. Пользовательский сервис и маршруты регистрации](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-6-polzovatelskij-servis-i-marshruty-regist/)
+7. [FastAPI 7. Электронная почта, подтверждение регистрации, Celery и Redis](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-7-elektronnaya-pochta-podtverzhdenie-registracii-celery-i-redis/)
 
 ## Установка
 

@@ -19,6 +19,9 @@ dependencies = [
     "pydantic[email] (>=2.10.5,<3.0.0)",
     "passlib (>=1.7.4,<2.0.0)",
     "bcrypt (==4.0.1)",
+    "celery (>=5.4.0,<6.0.0)",
+    "redis (>=5.2.1,<6.0.0)",
+    "itsdangerous (>=2.2.0,<3.0.0)",
 ]
 
 [build-system]
@@ -27,3 +30,6 @@ build-backend = "poetry.core.masonry.api"
 
 [project.scripts]
 app = "lkeep.main:start"
+
+[tool.poetry.group.dev.dependencies]
+black = "^25.1.0"
