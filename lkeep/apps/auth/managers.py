@@ -7,7 +7,7 @@ https://pressanybutton.ru/category/servis-na-fastapi/
 """
 
 from fastapi import Depends, HTTPException
-from sqlalchemy import insert
+from sqlalchemy import insert, update
 from sqlalchemy.exc import IntegrityError
 
 from lkeep.apps.auth.schemas import CreateUser, UserReturnData
@@ -24,8 +24,6 @@ class UserManager:
         """
         Инициализирует экземпляр класса.
 
-        :param model: Модель, используемая для работы с данными.
-        :type model: Type[User]
         :param db: Зависимость от базы данных. По умолчанию используется Depends(DBDependency).
         :type db: DBDependency
         """
@@ -42,7 +40,7 @@ class UserManager:
         :rtype: UserReturnData
         :raises HTTPException: Если пользователь уже существует.
         """
-        async with self.db.db_session as session:
+        async with self.db.db_session() as session:
             query = insert(self.model).values(**user.model_dump()).returning(self.model)
 
             try:
@@ -52,5 +50,17 @@ class UserManager:
 
             await session.commit()
 
-            user_data = await result.scalar_one()
+            user_data = result.scalar_one()
             return UserReturnData(**user_data.__dict__)
+
+    async def confirm_user(self, email: str) -> None:
+        """
+        Асинхронный метод для подтверждения пользователя по электронной почте.
+
+        :param email: Электронная почта пользователя, которого нужно подтвердить.
+        :type email: str
+        """
+        async with self.db.db_session() as session:
+            query = update(self.model).where(self.model.email == email).values(is_verified=True, is_active=True)
+            await session.execute(query)
+            await session.commit()
