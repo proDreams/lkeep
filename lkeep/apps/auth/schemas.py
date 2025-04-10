@@ -34,7 +34,7 @@ class GetUserByEmail(BaseModel):
     email: EmailStr
 
 
-class RegisterUser(GetUserByEmail):
+class AuthUser(GetUserByEmail):
     """
     Класс для регистрации пользователя, наследующий класс GetUserByEmail.
 
@@ -54,6 +54,21 @@ class CreateUser(GetUserByEmail):
     """
 
     hashed_password: str
+
+
+class GetUserWithIDAndEmail(GetUserByID, CreateUser):
+    """
+    Класс для получения пользователя по его ID и email.
+
+    :ivar id: Уникальный идентификатор пользователя.
+    :type id: int
+    :ivar email: Адрес электронной почты пользователя.
+    :type email: str
+    :ivar hashed_password: Хэшированный пароль пользователя.
+    :type hashed_password: str
+    """
+
+    pass
 
 
 class UserReturnData(GetUserByID, GetUserByEmail):

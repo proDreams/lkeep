@@ -8,10 +8,12 @@ https://pressanybutton.ru/category/servis-na-fastapi/
 
 from fastapi import Depends, HTTPException
 from itsdangerous import BadSignature, URLSafeTimedSerializer
+from starlette import status
+from starlette.responses import JSONResponse
 
 from lkeep.apps.auth.handlers import AuthHandler
 from lkeep.apps.auth.managers import UserManager
-from lkeep.apps.auth.schemas import CreateUser, RegisterUser, UserReturnData
+from lkeep.apps.auth.schemas import AuthUser, CreateUser, UserReturnData
 from lkeep.apps.auth.tasks import send_confirmation_email
 from lkeep.core.settings import settings
 
@@ -36,12 +38,12 @@ class UserService:
         self.handler = handler
         self.serializer = URLSafeTimedSerializer(secret_key=settings.secret_key.get_secret_value())
 
-    async def register_user(self, user: RegisterUser) -> UserReturnData:
+    async def register_user(self, user: AuthUser) -> UserReturnData:
         """
         Регистрирует нового пользователя в системе.
 
         :param user: Информация о пользователе, который нужно зарегистрировать.
-        :type user: RegisterUser
+        :type user: AuthUser
         :returns: Данные о созданном пользователе.
         :rtype: UserReturnData
         """
@@ -70,3 +72,34 @@ class UserService:
             raise HTTPException(status_code=400, detail="Неверный или просроченный токен")
 
         await self.manager.confirm_user(email=email)
+
+    async def login_user(self, user: AuthUser) -> JSONResponse:
+        """
+        Вход пользователя в систему.
+
+        :param user: Объект пользователя с входными данными для аутентификации.
+        :type user: AuthUser
+        :returns: Ответ сервера, указывающий на успешность или неудачу входа.
+        :rtype: JSONResponse
+        :raises HTTPException: Если предоставленные учетные данные неверны (HTTP 401 Unauthorized).
+        """
+        exist_user = await self.manager.get_user_by_email(email=user.email)
+
+        if exist_user is None or not self.handler.verify_password(
+            hashed_password=exist_user.hashed_password, raw_password=user.password
+        ):
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Wrong email or password")
+
+        token, session_id = await self.handler.create_access_token(user_id=exist_user.id)
+
+        await self.manager.store_access_token(token=token, user_id=exist_user.id, session_id=session_id)
+
+        response = JSONResponse(content={"message": "Вход успешен"})
+        response.set_cookie(
+            key="Authorization",
+            value=token,
+            httponly=True,
+            max_age=settings.access_token_expire,
+        )
+
+        return response
