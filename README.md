@@ -30,6 +30,10 @@ PostgreSQL, Poetry, Pydantic и других.
 - **smtplib** — стандартный модуль Python для отправки электронной почты через протокол SMTP.
 - **jinja2** — современный и гибкий шаблонизатор, который позволяет динамически генерировать HTML и другие текстовые
   форматы.
+- **pyJWT** — библиотека для создания, подписи и верификации JSON Web Tokens (JWT). Используется для генерации токенов
+  доступа, проверки их
+  целостности, срока действия и подписи, а также работы с закодированными данными (payload) в соответствии со
+  стандартами JWT.
 
 ## Репозитории
 
@@ -48,6 +52,7 @@ PostgreSQL, Poetry, Pydantic и других.
 5. [FastAPI 5. Приложение аутентификации и Pydantic схемы](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-5-prilozhenie-autentifikacii-i-pydantic-sh/)
 6. [FastAPI 6. Пользовательский сервис и маршруты регистрации](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-6-polzovatelskij-servis-i-marshruty-regist/)
 7. [FastAPI 7. Электронная почта, подтверждение регистрации, Celery и Redis](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-7-elektronnaya-pochta-podtverzhdenie-registracii-celery-i-redis/)
+8. [FastAPI 8. Маршрут авторизации и JWT](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-8-marshrut-avtorizacii-i-jwt/)
 
 ## Установка
 
