@@ -117,6 +117,8 @@ class Settings(BaseSettings):
     :type templates_dir: str
     :ivar frontend_url: Адрес фронтенд-приложения.
     :type frontend_url: str
+    :ivar access_token_expire: Срок жизни JWT-токена
+    :type access_token_expire: int
     """
 
     db_settings: DBSettings = DBSettings()
@@ -125,6 +127,7 @@ class Settings(BaseSettings):
     secret_key: SecretStr
     templates_dir: str = "templates"
     frontend_url: str
+    access_token_expire: int
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf8", extra="ignore")
 
