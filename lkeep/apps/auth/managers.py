@@ -12,7 +12,12 @@ from fastapi import Depends, HTTPException
 from sqlalchemy import insert, select, update
 from sqlalchemy.exc import IntegrityError
 
-from lkeep.apps.auth.schemas import CreateUser, GetUserWithIDAndEmail, UserReturnData
+from lkeep.apps.auth.schemas import (
+    CreateUser,
+    GetUserWithIDAndEmail,
+    UserReturnData,
+    UserVerifySchema,
+)
 from lkeep.core.core_dependency.db_dependency import DBDependency
 from lkeep.core.core_dependency.redis_dependency import RedisDependency
 from lkeep.database.models import User
@@ -93,6 +98,27 @@ class UserManager:
 
             return None
 
+    async def get_user_by_id(self, user_id: uuid.UUID | str) -> UserVerifySchema | None:
+        """
+        Возвращает информацию о пользователе по его идентификатору.
+
+        :param user_id: Идентификатор пользователя, для которого нужно получить информацию.
+            Может быть представлен в виде UUID или строки.
+        :type user_id: uuid.UUID | str
+        :returns: Схема данных пользователя, если пользователь найден; None, если пользователь не найден.
+        :rtype: UserVerifySchema | None
+        """
+        async with self.db.db_session() as session:
+            query = select(self.model.id, self.model.email).where(self.model.id == user_id)
+
+            result = await session.execute(query)
+            user = result.mappings().one_or_none()
+
+            if user:
+                return UserVerifySchema(**user)
+
+            return None
+
     async def store_access_token(self, token: str, user_id: uuid.UUID | str, session_id: str) -> None:
         """
         Сохраняет токен доступа в хранилище (Redis).
@@ -106,3 +132,30 @@ class UserManager:
         """
         async with self.redis.get_client() as client:
             await client.set(f"{user_id}:{session_id}", token)
+
+    async def get_access_token(self, user_id: uuid.UUID | str, session_id: str) -> str | None:
+        """
+        Получает токен доступа из кэша по идентификаторам пользователя и сессии.
+
+        :param user_id: Идентификатор пользователя, может быть в формате UUID или строка.
+        :type user_id: uuid.UUID | str
+        :param session_id: Идентификатор сессии, строка.
+        :type session_id: str
+        :returns: Токен доступа из кэша, если он существует; иначе None.
+        :rtype: str | None
+        """
+        async with self.redis.get_client() as client:
+            return await client.get(f"{user_id}:{session_id}")
+
+    async def revoke_access_token(self, user_id: uuid.UUID | str, session_id: str | uuid.UUID | None) -> None:
+        """
+        Отзывает доступный токен доступа пользователя.
+
+        :param user_id: Идентификатор пользователя, которому принадлежит токен.
+        :type user_id: uuid.UUID | str
+        :param session_id: Идентификатор сессии, для которой должен быть отозван токен.
+            Если None, то все сессии пользователя будут отозваны.
+        :type session_id: str | uuid.UUID | None
+        """
+        async with self.redis.get_client() as client:
+            await client.delete(f"{user_id}:{session_id}")

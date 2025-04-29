@@ -13,7 +13,12 @@ from starlette.responses import JSONResponse
 
 from lkeep.apps.auth.handlers import AuthHandler
 from lkeep.apps.auth.managers import UserManager
-from lkeep.apps.auth.schemas import AuthUser, CreateUser, UserReturnData
+from lkeep.apps.auth.schemas import (
+    AuthUser,
+    CreateUser,
+    UserReturnData,
+    UserVerifySchema,
+)
 from lkeep.apps.auth.tasks import send_confirmation_email
 from lkeep.core.settings import settings
 
@@ -85,7 +90,7 @@ class UserService:
         """
         exist_user = await self.manager.get_user_by_email(email=user.email)
 
-        if exist_user is None or not self.handler.verify_password(
+        if exist_user is None or not await self.handler.verify_password(
             hashed_password=exist_user.hashed_password, raw_password=user.password
         ):
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Wrong email or password")
@@ -101,5 +106,22 @@ class UserService:
             httponly=True,
             max_age=settings.access_token_expire,
         )
+
+        return response
+
+    async def logout_user(self, user: UserVerifySchema) -> JSONResponse:
+        """
+        Отправляет запрос на выход пользователя из системы.
+
+        :param user: Схема, содержащая информацию о пользователе для аутентификации.
+        :type user: UserVerifySchema
+        :returns: Ответ сервера с сообщением об успешном выходе пользователя.
+        :rtype: JSONResponse
+        :raises Exception: Если произошла ошибка при отмене токена доступа.
+        """
+        await self.manager.revoke_access_token(user_id=user.id, session_id=user.session_id)
+
+        response = JSONResponse(content={"message": "Logged out"})
+        response.delete_cookie(key="Authorization")
 
         return response

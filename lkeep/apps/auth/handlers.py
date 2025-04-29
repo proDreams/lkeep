@@ -10,7 +10,9 @@ import datetime
 import uuid
 
 import jwt
+from fastapi import HTTPException
 from passlib.context import CryptContext
+from starlette import status
 
 from lkeep.apps.auth.named_tuples import CreateTokenTuple
 from lkeep.core.settings import settings
@@ -70,3 +72,22 @@ class AuthHandler:
         encoded_jwt = jwt.encode(payload=data, key=self.secret, algorithm="HS256")
 
         return CreateTokenTuple(encoded_jwt=encoded_jwt, session_id=session_id)
+
+    async def decode_access_token(self, token: str) -> dict:
+        """
+        Декодирует JWT-токен и возвращает его содержимое.
+
+        :param token: Строка с JWT-токеном, который нужно декодировать.
+        :type token: str
+        :returns: Данные, содержащиеся в декодированном токене.
+        :rtype: dict
+        :raises HTTPException: При ошибке декодирования токена (например, токен просрочен или невалиден).
+                Статус-код ответа 401 UNAUTHORIZED, детализация "Token has expired" при просрочке,
+                и "Invalid token" при недопустимости токена.
+        """
+        try:
+            return jwt.decode(jwt=token, key=self.secret, algorithms=["HS256"])
+        except jwt.ExpiredSignatureError:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Token has expired")
+        except jwt.InvalidTokenError:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")

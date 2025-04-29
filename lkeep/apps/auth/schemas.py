@@ -34,6 +34,17 @@ class GetUserByEmail(BaseModel):
     email: EmailStr
 
 
+class UserVerifySchema(GetUserByID, GetUserByEmail):
+    """
+    Класс для валидации данных пользователя.
+
+    Данный класс наследует методы из классов GetUserByID и GetUserByEmail,
+    что позволяет использовать их функциональность для проверки данных пользователя.
+    """
+
+    session_id: uuid.UUID | str | None = None
+
+
 class AuthUser(GetUserByEmail):
     """
     Класс для регистрации пользователя, наследующий класс GetUserByEmail.
