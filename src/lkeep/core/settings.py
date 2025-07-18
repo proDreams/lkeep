@@ -128,6 +128,7 @@ class Settings(BaseSettings):
     templates_dir: str = "templates"
     frontend_url: str
     access_token_expire: int
+    domain: str
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf8", extra="ignore")
 
