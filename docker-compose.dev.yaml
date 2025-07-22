@@ -1,0 +1,39 @@
+services:
+  lkeep_db:
+    image: postgres:17.5-alpine
+    container_name: lkeep_db
+    restart: always
+    environment:
+      - TZ=Europe/Moscow
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - lkeep_db:/var/lib/postgresql/data
+      - /etc/localtime:/etc/localtime:ro
+    healthcheck:
+      test: [ "CMD-SHELL", "sh -c 'pg_isready -U ${DB_USER} -d ${DB_NAME}'" ]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  lkeep_redis:
+    image: redis:7.4-alpine
+    container_name: lkeep_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - lkeep_redis:/data
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  lkeep_db:
+  lkeep_redis:

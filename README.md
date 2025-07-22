@@ -1,5 +1,10 @@
 # Napkin Tools: Lkeep (Links Keeper)
 
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/proDreams/lkeep/lint.yaml)
+[![Код на салфетке](https://img.shields.io/badge/Telegram-Код_на_салфетке-blue)](https://t.me/press_any_button)
+[![Заметки на салфетке](https://img.shields.io/badge/Telegram-Заметки_на_салфетке-blue)](https://t.me/writeanynotes)
+[![Кот на салфетке чат](https://img.shields.io/badge/Telegram-Кот_на_салфетке_чат-blue)](https://t.me/+Li2vbxfWo0Q4ZDk6)
+
 Lkeep — сервис сокращения ссылок, написанный на Python с использованием современных технологий, таких как FastAPI,
 PostgreSQL, Poetry, Pydantic и других.
 
@@ -53,6 +58,8 @@ PostgreSQL, Poetry, Pydantic и других.
 6. [FastAPI 6. Пользовательский сервис и маршруты регистрации](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-6-polzovatelskij-servis-i-marshruty-regist/)
 7. [FastAPI 7. Электронная почта, подтверждение регистрации, Celery и Redis](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-7-elektronnaya-pochta-podtverzhdenie-registracii-celery-i-redis/)
 8. [FastAPI 8. Маршрут авторизации и JWT](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-8-marshrut-avtorizacii-i-jwt/)
+9. [FastAPI 9. Logout и проверка авторизации](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-9-logout-i-proverka-avtorizacii/)
+10. [FastAPI 10. Изменение данных пользователя]()
 
 ## Установка
 
@@ -97,7 +104,14 @@ PostgreSQL, Poetry, Pydantic и других.
    Затем откройте файл `.env` и заполните его значениями, соответствующими вашей системе (например, настройки
    подключения к базе данных PostgreSQL).
 
-4. **Запустите приложение:**
+4. **Запустите БД и Redis**
+
+    Для запуска контейнера с PostgreSQL и Redis используйте команду в терминале:
+    ```bash
+    docker compose up -d
+    ```
+
+5. **Запустите приложение:**
 
    Для запуска сервера в режиме разработки используйте команду с Poetry:
    ```bash

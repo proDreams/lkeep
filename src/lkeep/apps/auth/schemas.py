@@ -8,8 +8,9 @@ https://pressanybutton.ru/category/servis-na-fastapi/
 
 import datetime
 import uuid
+from typing import Annotated
 
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, StringConstraints
 
 
 class GetUserByID(BaseModel):
@@ -53,7 +54,7 @@ class AuthUser(GetUserByEmail):
     :type password: str
     """
 
-    password: str
+    password: Annotated[str, StringConstraints(min_length=8, max_length=128)]
 
 
 class CreateUser(GetUserByEmail):
