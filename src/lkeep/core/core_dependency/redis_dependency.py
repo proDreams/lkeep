@@ -41,7 +41,7 @@ class RedisDependency:
         return ConnectionPool.from_url(url=self._url, encoding="utf-8", decode_responses=True)
 
     @asynccontextmanager
-    async def get_client(self) -> AsyncGenerator[Redis, None]:
+    async def get_client(self) -> AsyncGenerator[Redis]:
         """
         Получает клиентскую сессию Redis для взаимодействия с базой данных.
 

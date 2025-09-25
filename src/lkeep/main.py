@@ -26,4 +26,9 @@ app.add_middleware(
 
 
 def start():
+    """
+    Запускает локальный сервер приложения с поддержкой автоматической перезагрузки.
+
+    :returns: None
+    """
     uvicorn.run(app="lkeep.main:app", reload=True)

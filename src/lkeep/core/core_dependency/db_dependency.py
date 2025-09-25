@@ -1,3 +1,11 @@
+"""
+Проект: Lkeep
+Автор: Иван Ашихмин
+Год: 2025
+Специально для проекта "Код на салфетке"
+https://pressanybutton.ru/category/servis-na-fastapi/
+"""
+
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from lkeep.core.settings import settings

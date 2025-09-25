@@ -119,6 +119,8 @@ class Settings(BaseSettings):
     :type frontend_url: str
     :ivar access_token_expire: Срок жизни JWT-токена
     :type access_token_expire: int
+    :ivar link_length: Максимальная длина короткой ссылки
+    :type link_length: int
     """
 
     db_settings: DBSettings = DBSettings()
@@ -129,6 +131,7 @@ class Settings(BaseSettings):
     frontend_url: str
     access_token_expire: int
     domain: str
+    link_length: int = 12
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf8", extra="ignore")
 

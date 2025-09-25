@@ -3,7 +3,7 @@
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/proDreams/lkeep/lint.yaml)
 [![Код на салфетке](https://img.shields.io/badge/Telegram-Код_на_салфетке-blue)](https://t.me/press_any_button)
 [![Заметки на салфетке](https://img.shields.io/badge/Telegram-Заметки_на_салфетке-blue)](https://t.me/writeanynotes)
-[![Кот на салфетке чат](https://img.shields.io/badge/Telegram-Кот_на_салфетке_чат-blue)](https://t.me/+Li2vbxfWo0Q4ZDk6)
+[![Кот на салфетке](https://img.shields.io/badge/Telegram-Кот_на_салфетке-blue)](https://t.me/+Li2vbxfWo0Q4ZDk6)
 
 Lkeep — сервис сокращения ссылок, написанный на Python с использованием современных технологий, таких как FastAPI,
 PostgreSQL, Poetry, Pydantic и других.
@@ -59,10 +59,11 @@ PostgreSQL, Poetry, Pydantic и других.
 7. [FastAPI 7. Электронная почта, подтверждение регистрации, Celery и Redis](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-7-elektronnaya-pochta-podtverzhdenie-registracii-celery-i-redis/)
 8. [FastAPI 8. Маршрут авторизации и JWT](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-8-marshrut-avtorizacii-i-jwt/)
 9. [FastAPI 9. Logout и проверка авторизации](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-9-logout-i-proverka-avtorizacii/)
-10. [FastAPI 10. Изменение данных пользователя]()
+10. [FastAPI 10. Изменение данных пользователя](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-10-izmenenie-dannyh-polzovatelya/)
+11. [FastAPI 11. Хранение и сокращение ссылок](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-11-hranenie-i-sokrashenie-ssylok/)
 
 ## Установка
-
+h
 Для установки и запуска проекта на вашем локальном компьютере выполните следующие шаги.
 
 1. **Клонируйте репозиторий:**

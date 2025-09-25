@@ -18,10 +18,10 @@ class GetUserByID(BaseModel):
     Класс для получения пользователя по его уникальному идентификатору (ID).
 
     :ivar id: Уникальный идентификатор пользователя, может быть представлен как объект типа uuid.UUID или строкой.
-    :type id: uuid.UUID | str
+    :type id: uuid.UUID
     """
 
-    id: uuid.UUID | str
+    id: uuid.UUID
 
 
 class GetUserByEmail(BaseModel):
