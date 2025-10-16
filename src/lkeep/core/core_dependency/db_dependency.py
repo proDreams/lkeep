@@ -6,7 +6,12 @@
 https://pressanybutton.ru/category/servis-na-fastapi/
 """
 
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+from sqlalchemy.ext.asyncio import (
+    AsyncEngine,
+    AsyncSession,
+    async_sessionmaker,
+    create_async_engine,
+)
 
 from lkeep.core.settings import settings
 
@@ -32,3 +37,11 @@ class DBDependency:
         :rtype: async_sessionmaker[AsyncSession]
         """
         return self._session_factory
+
+    @property
+    def db_engine(self) -> AsyncEngine:
+        return self._engine
+
+
+def get_db_engine() -> AsyncEngine:
+    return DBDependency().db_engine

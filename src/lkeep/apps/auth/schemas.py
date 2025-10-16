@@ -83,6 +83,10 @@ class GetUserWithIDAndEmail(GetUserByID, CreateUser):
     pass
 
 
+class GetUserForAdmin(GetUserWithIDAndEmail):
+    is_superuser: bool
+
+
 class UserReturnData(GetUserByID, GetUserByEmail):
     """
     Класс для представления данных пользователя, возвращаемых из API.

@@ -61,9 +61,10 @@ PostgreSQL, Poetry, Pydantic и других.
 9. [FastAPI 9. Logout и проверка авторизации](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-9-logout-i-proverka-avtorizacii/)
 10. [FastAPI 10. Изменение данных пользователя](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-10-izmenenie-dannyh-polzovatelya/)
 11. [FastAPI 11. Хранение и сокращение ссылок](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-11-hranenie-i-sokrashenie-ssylok/)
+11. [FastAPI 12. Интеграция Starlette Admin](https://pressanybutton.ru/post/servis-na-fastapi/fastapi-12-integraciya-starlette-admin/)
 
 ## Установка
-h
+
 Для установки и запуска проекта на вашем локальном компьютере выполните следующие шаги.
 
 1. **Клонируйте репозиторий:**

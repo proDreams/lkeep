@@ -14,6 +14,7 @@ from sqlalchemy.exc import IntegrityError
 
 from lkeep.apps.auth.schemas import (
     CreateUser,
+    GetUserForAdmin,
     GetUserWithIDAndEmail,
     UserReturnData,
     UserVerifySchema,
@@ -95,6 +96,20 @@ class UserManager:
 
             if user:
                 return GetUserWithIDAndEmail(**user)
+
+            return None
+
+    async def get_user_by_email_for_admin(self, email: str) -> GetUserForAdmin | None:
+        async with self.db.db_session() as session:
+            query = select(self.model.id, self.model.email, self.model.hashed_password, self.model.is_superuser).where(
+                self.model.email == email
+            )
+
+            result = await session.execute(query)
+            user = result.mappings().first()
+
+            if user:
+                return GetUserForAdmin(**user)
 
             return None
 

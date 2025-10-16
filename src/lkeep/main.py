@@ -11,6 +11,7 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from lkeep.apps import apps_router
+from lkeep.apps.admin.admin_base import setup_admin
 
 app = FastAPI()
 
@@ -23,6 +24,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+setup_admin(app=app)
 
 
 def start():
